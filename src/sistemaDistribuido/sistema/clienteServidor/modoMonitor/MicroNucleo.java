@@ -89,8 +89,54 @@ public final class MicroNucleo extends MicroNucleoBase {
     /**
      * Para el(la) encargad@ de direccionamiento por servidor de nombres en practica 5
      */
-    protected void sendVerdadero(String dest, byte[] message) {
-    }
+    protected void sendVerdadero(String dest, byte[] message)
+    {
+        System.out.println("Invocado sendVerdadero con String");
+
+
+
+        if(dest != "")
+        {
+            if(tablaEmision.containsKey(Integer.parseInt(dest)))
+            {
+                message = empacarDatos(tablaEmision.get(new Integer(dest)).getId(), message);
+                enviarMensaje(tablaEmision.get(new Integer(dest)).getIp(), message);
+                imprimeln("Enviando mensaje a IP=" + tablaEmision.get(new Integer(dest)).getIp() + " ID=" + tablaEmision.get(new Integer(dest)));
+                tablaEmision.remove(dest);
+            }//fin de if
+            else
+            {
+                String error = "Ningun servidor te puede atender";
+                for(int i = 12; i < message.length; i++){
+                    message[i] = (byte)error.charAt(i);
+                }
+
+
+                System.out.println("No hay servidores disponibles");
+            }
+        }
+        else
+        {
+
+            System.out.println("No hay servidores disponibles");
+        }
+
+
+
+
+        /*ParMaquinaProceso pmp = dameDestinatarioDesdeInterfaz();
+        if (tablaEmision.containsKey(dest)) {
+            message = empacarDatos(tablaEmision.get(new Integer(dest)).getId(), message);
+            enviarMensaje(tablaEmision.get(new Integer(dest)).getIp(), message);
+            imprimeln("Enviando mensaje a IP=" + tablaEmision.get(new Integer(dest)).getIp() + " ID=" + tablaEmision.get(new Integer(dest)));
+            tablaEmision.remove(dest);
+        } else {
+            message = empacarDatos(pmp.dameID(), message);
+            enviarMensaje(pmp.dameIP(), message);
+            imprimeln("Enviando mensaje a IP=" + pmp.dameIP() + " ID=" + pmp.dameID());
+        }*/
+
+    }//fin del metodo sendVerdadero
 
     /**
      * Para el(la) encargad@ de primitivas sin bloqueo en practica 5
@@ -203,6 +249,11 @@ public final class MicroNucleo extends MicroNucleoBase {
         arreglo[1] = (byte) valor;
         return arreglo;
     }
+
+    public void registrarTablaEmision(ParMaquinaProceso pmp) {
+        TransmisionProceso transmisionProceso = new TransmisionProceso(pmp.dameID(), pmp.dameIP());
+        tablaEmision.put(new Integer(transmisionProceso.getId()), transmisionProceso);
+    }//fin del metodo registrarTablaEmision
 }
 
 class TransmisionProceso {

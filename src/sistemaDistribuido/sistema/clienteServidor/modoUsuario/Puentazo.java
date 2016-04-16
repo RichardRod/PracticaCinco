@@ -1,10 +1,26 @@
 package sistemaDistribuido.sistema.clienteServidor.modoUsuario;
 
+import sistemaDistribuido.sistema.clienteServidor.modoMonitor.Nucleo;
 import sistemaDistribuido.sistema.clienteServidor.modoMonitor.ParMaquinaProceso;
 
 public class Puentazo {
 
     private static ProcesoServidorNombres servidorNombres;
+
+    public static String importarInterfaz(String nombreServidor)
+    {
+        String server = "";
+        ParMaquinaProceso asa = servidorNombres.busqueda(nombreServidor);
+
+        if (asa != null) {
+            Nucleo.nucleo.registrarTablaEmision(asa);
+            server = Integer.toString(asa.dameID());
+        }//fin de if
+
+        System.out.println("RPC.java regresa: " + server);
+
+        return server;
+    }
 
     public static void asignarPuente(ProcesoServidorNombres servidor)
     {

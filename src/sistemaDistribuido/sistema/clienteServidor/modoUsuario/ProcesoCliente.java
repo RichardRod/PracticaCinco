@@ -31,8 +31,14 @@ public class ProcesoCliente extends Proceso {
         byte[] respCliente = new byte[1024];
         String dato;
         imprimeln("Señalamiento al núcleo para envío de mensaje");
-        Nucleo.send(248, solCliente);
-        Nucleo.send(NOMBRE_SERVIDOR, solCliente);
+        //Nucleo.send(248, solCliente);
+        String destino = Puentazo.importarInterfaz(NOMBRE_SERVIDOR);
+
+        System.out.println("Destino ProcesoCliente.java: " + destino);
+
+
+        Nucleo.send(destino, solCliente);
+
         imprimeln("Invocando a Receive.");
         Nucleo.receive(dameID(), respCliente);
         imprimeln("Procesando respuesta recibida del servidor");

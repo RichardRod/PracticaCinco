@@ -1,5 +1,6 @@
 package sistemaDistribuido.sistema.clienteServidor.modoUsuario;
 
+import sistemaDistribuido.sistema.clienteServidor.modoMonitor.ParMaquinaProceso;
 import sistemaDistribuido.util.Escribano;
 import sistemaDistribuido.visual.clienteServidor.ServidorNombresFrame;
 
@@ -35,6 +36,29 @@ public class ProcesoServidorNombres extends Proceso{
 
     }//fin del metodo run
 
+    public ParMaquinaProceso busqueda(String nombreServidor)
+    {
+        imprimeln("Buscando servidor disponible...");
+        ParMaquinaProceso asa = null;
+
+        if(listaProcesos.size() != 0)
+        {
+            for(int i = 0; i < listaProcesos.size(); i++)
+            {
+                if(listaProcesos.get(i).getNombreServidor().equals(nombreServidor))
+                {
+                    imprimeln("Servidor encontrado");
+                    asa = listaProcesos.get(i).getAsa();
+                    break;
+                }
+            }
+
+        }
+
+        return asa;
+
+    }//fin del metodo busqueda
+
     public void registrarServidor(String nombreServidor, int ID, String IP)
     {
         imprimeln("Registrado proceso " + ID);
@@ -45,7 +69,9 @@ public class ProcesoServidorNombres extends Proceso{
 
         //System.out.println("Contador: " + contador);
 
-        DatosProceso proceso = new DatosProceso(nombreServidor, ID, IP);
+        ParMaquinaProceso asa = new Asa(ID, IP);
+
+        DatosProceso proceso = new DatosProceso(nombreServidor, asa);
         proceso.setIndice(contador);
 
         listaProcesos.add(proceso);
@@ -69,7 +95,7 @@ public class ProcesoServidorNombres extends Proceso{
             if(proceso.getId() == id)
             {
                 indice = proceso.getIndice();
-                //System.out.println("Indice: " + indice);
+                System.out.println("Indice: " + indice);
                 listaProcesos.remove(proceso);
                 ((DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel()).removeRow(indice);
                 ServidorNombresFrame.tablaProcesos.addNotify();
@@ -96,13 +122,15 @@ class DatosProceso
     private int id;
     private String ip;
     private int indice;
+    private ParMaquinaProceso asa;
 
     //constructor
-    public DatosProceso(String nombreServidor, int id, String ip)
+    public DatosProceso(String nombreServidor, ParMaquinaProceso asa)
     {
         this.nombreServidor = nombreServidor;
-        this.id = id;
-        this.ip = ip;
+        this.asa = asa;
+        this.id = asa.dameID();
+        this.ip = asa.dameIP();
     }
 
     public void setIndice(int indice) {
@@ -123,5 +151,9 @@ class DatosProceso
 
     public String getIp() {
         return ip;
+    }
+
+    public ParMaquinaProceso getAsa() {
+        return asa;
     }
 }//fin de la clase DatosProceso
