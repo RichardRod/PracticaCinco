@@ -69,7 +69,7 @@ public class ProcesoServidorNombres extends Proceso{
             if(proceso.getId() == id)
             {
                 indice = proceso.getIndice();
-                System.out.println("Indice: " + indice);
+                //System.out.println("Indice: " + indice);
                 listaProcesos.remove(proceso);
                 ((DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel()).removeRow(indice);
                 ServidorNombresFrame.tablaProcesos.addNotify();

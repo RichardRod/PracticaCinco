@@ -16,6 +16,8 @@ public class ProcesoCliente extends Proceso {
     private short codigoOperacion;
     private String datos;
 
+    public final String NOMBRE_SERVIDOR = "ServidorMagico";
+
     public ProcesoCliente(Escribano esc) {
         super(esc);
         start();
@@ -30,6 +32,7 @@ public class ProcesoCliente extends Proceso {
         String dato;
         imprimeln("Señalamiento al núcleo para envío de mensaje");
         Nucleo.send(248, solCliente);
+        Nucleo.send(NOMBRE_SERVIDOR, solCliente);
         imprimeln("Invocando a Receive.");
         Nucleo.receive(dameID(), respCliente);
         imprimeln("Procesando respuesta recibida del servidor");

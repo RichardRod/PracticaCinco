@@ -1,5 +1,7 @@
 package sistemaDistribuido.sistema.clienteServidor.modoUsuario;
 
+import sistemaDistribuido.sistema.clienteServidor.modoMonitor.ParMaquinaProceso;
+
 public class Puentazo {
 
     private static ProcesoServidorNombres servidorNombres;
@@ -10,9 +12,9 @@ public class Puentazo {
         servidorNombres.iniciar();
     }
 
-    public static int agregar(String NOMBRE_SERVIDOR, int i, String hostAddress)
+    public static int agregar(String NOMBRE_SERVIDOR, ParMaquinaProceso asa)
     {
-        servidorNombres.registrarServidor(NOMBRE_SERVIDOR, i, hostAddress);
+        servidorNombres.registrarServidor(NOMBRE_SERVIDOR, asa.dameID(), asa.dameIP());
         return 0;
     }
 

@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import sistemaDistribuido.sistema.clienteServidor.modoMonitor.Nucleo;
+import sistemaDistribuido.sistema.clienteServidor.modoMonitor.ParMaquinaProceso;
 import sistemaDistribuido.util.Escribano;
 import sistemaDistribuido.util.Pausador;
 
@@ -44,15 +45,16 @@ public class ProcesoServidor extends Proceso {
         int origen;
 
         //registrar proceso
-
         imprimeln("Registrando servidor");
-
+        ParMaquinaProceso asa = null;
         try {
-            Puentazo.agregar(NOMBRE_SERVIDOR, dameID(), InetAddress.getLocalHost().getHostAddress());
-        } catch (UnknownHostException e) {
+            asa = new Asa(Nucleo.dameIdProceso(), InetAddress.getLocalHost().getHostAddress());
+        }//fin de try
+        catch (UnknownHostException e) {
             e.printStackTrace();
-        }
+        }//fin de catch
 
+        Puentazo.agregar(NOMBRE_SERVIDOR, asa);
 
         while (continuar()) {
             Nucleo.receive(dameID(), solServidor);
@@ -68,6 +70,7 @@ public class ProcesoServidor extends Proceso {
             imprimeln("Fin del proceso");
         }
 
+        //baja de servidor
         Puentazo.eliminar(dameID());
     }
 
