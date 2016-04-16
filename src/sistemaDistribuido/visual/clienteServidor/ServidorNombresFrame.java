@@ -1,6 +1,7 @@
 package sistemaDistribuido.visual.clienteServidor;
 
 import sistemaDistribuido.sistema.clienteServidor.modoUsuario.ProcesoServidorNombres;
+import sistemaDistribuido.sistema.clienteServidor.modoUsuario.Puente;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,7 +21,7 @@ public class ServidorNombresFrame extends ProcesoFrame
 
         tablaProcesos = new JTable(new DefaultTableModel(new Object[][]{},
                 new String[]{
-                        "Numero", "Nombre", "Direccion IP", "ID"
+                        "Nombre", "Direccion IP", "Identificador"
                 }));
         add(tablaProcesos);
 
@@ -31,8 +32,8 @@ public class ServidorNombresFrame extends ProcesoFrame
 
         proc=new ProcesoServidorNombres(this);
         fijarProceso(proc);
+        Puente.asignarPuente(proc);
 
     }//fin del constructor
-
 
 }//fin de la clase ServidorNombresFrame

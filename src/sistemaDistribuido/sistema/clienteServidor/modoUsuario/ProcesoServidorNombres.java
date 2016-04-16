@@ -12,6 +12,7 @@ public class ProcesoServidorNombres extends Proceso{
     private LinkedList<DatosProceso> listaProcesos = new LinkedList<>();
 
 
+
     //constructor
     public ProcesoServidorNombres(Escribano esc)
     {
@@ -20,28 +21,34 @@ public class ProcesoServidorNombres extends Proceso{
 
     }//fin del constructor
 
+    public void iniciar()
+    {
+        listaProcesos = new LinkedList<>();
+    }
+
     public void run()
     {
-        imprimeln("Servidor De Nombres Iniciado");
+        imprimeln("Proceso Servidor Nombres iniciado");
 
         while(continuar())
         {
 
         }//fin de while
+
     }//fin del metodo run
 
     public void registrarServidor(String nombreServidor, int ID, String IP)
     {
-        imprimeln("Registrado: " + nombreServidor);
+        imprimeln("Registrado proceso " + ID);
 
         DefaultTableModel modelo = (DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel();
-        Object[] fila = new Object[4];
+        Object[] fila = new Object[3];
 
         listaProcesos.add(new DatosProceso(nombreServidor, ID, IP));
-        fila[0] = "";
-        fila[1] = nombreServidor;
+
+        fila[0] = nombreServidor;
+        fila[1] = IP;
         fila[2] = ID;
-        fila[3] = IP;
 
         modelo.addRow(fila);
         ServidorNombresFrame.tablaProcesos.setModel(modelo);

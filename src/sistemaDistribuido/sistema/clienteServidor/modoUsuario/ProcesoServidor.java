@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import sistemaDistribuido.sistema.clienteServidor.modoMonitor.Nucleo;
 import sistemaDistribuido.util.Escribano;
@@ -20,6 +22,8 @@ import sistemaDistribuido.util.Pausador;
  */
 
 public class ProcesoServidor extends Proceso {
+
+    public final String NOMBRE_SERVIDOR = "ServidorMagico";
 
     /**
      *
@@ -39,6 +43,17 @@ public class ProcesoServidor extends Proceso {
         byte[] respServidor;
         int origen;
 
+        //registrar proceso
+
+        imprimeln("Registrando servidor");
+
+        try {
+            Puente.exportarInterfaz(NOMBRE_SERVIDOR, dameID(), InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+
         while (continuar()) {
             Nucleo.receive(dameID(), solServidor);
             imprimeln("Invocando a Receive.");
@@ -52,6 +67,8 @@ public class ProcesoServidor extends Proceso {
             Nucleo.send(origen, respServidor);
             imprimeln("Fin del proceso");
         }
+
+        Puente.eliminar(dameID());
     }
 
     private boolean crearArchivo(String nombreArchivo) {
