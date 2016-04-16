@@ -7,6 +7,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+/**
+ * @Nombre: Rodriguez Haro Ricardo
+ * @seccion: D04
+ * @No: Practica 5
+ * Modificado para Practica 5
+ */
+
 public class ServidorNombresFrame extends ProcesoFrame
 {
     //atributos

@@ -3,6 +3,13 @@ package sistemaDistribuido.sistema.clienteServidor.modoUsuario;
 import sistemaDistribuido.sistema.clienteServidor.modoMonitor.Nucleo;
 import sistemaDistribuido.sistema.clienteServidor.modoMonitor.ParMaquinaProceso;
 
+/**
+ * @Nombre: Rodriguez Haro Ricardo
+ * @seccion: D04
+ * @No: Practica 5
+ * Modificado para Practica 5
+ */
+
 public class Puentazo {
 
     private static ProcesoServidorNombres servidorNombres;

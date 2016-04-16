@@ -8,7 +8,7 @@ import sistemaDistribuido.util.Escribano;
  * @Nombre: Rodriguez Haro Ricardo
  * @seccion: D04
  * @No: Practica 1
- * Modificado para Practica 1
+ * Modificado para Practica 5
  */
 
 public class ProcesoCliente extends Proceso {
@@ -33,17 +33,18 @@ public class ProcesoCliente extends Proceso {
         imprimeln("Señalamiento al núcleo para envío de mensaje");
         //Nucleo.send(248, solCliente);
         String destino = Puentazo.importarInterfaz(NOMBRE_SERVIDOR);
-
         System.out.println("Destino ProcesoCliente.java: " + destino);
+        if (destino == "") {
+            imprimeln("Ningun servidor te puede atender");
+        } else {
+            Nucleo.send(destino, solCliente);
+            imprimeln("Invocando a Receive.");
+            Nucleo.receive(dameID(), respCliente);
+            imprimeln("Procesando respuesta recibida del servidor");
+            dato = desempacarDatos(respCliente);
+            imprimeln("Respuesta del servidor: " + dato);
+        }
 
-
-        Nucleo.send(destino, solCliente);
-
-        imprimeln("Invocando a Receive.");
-        Nucleo.receive(dameID(), respCliente);
-        imprimeln("Procesando respuesta recibida del servidor");
-        dato = desempacarDatos(respCliente);
-        imprimeln("Respuesta del servidor: " + dato);
         imprime("Fin del proceso");
     }//fin del metodo run
 

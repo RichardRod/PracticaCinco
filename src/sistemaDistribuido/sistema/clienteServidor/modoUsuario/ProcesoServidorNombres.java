@@ -7,63 +7,63 @@ import sistemaDistribuido.visual.clienteServidor.ServidorNombresFrame;
 import javax.swing.table.DefaultTableModel;
 import java.util.LinkedList;
 
-public class ProcesoServidorNombres extends Proceso{
+/**
+ * @Nombre: Rodriguez Haro Ricardo
+ * @seccion: D04
+ * @No: Practica 5
+ * Modificado para Practica 5
+ */
+
+public class ProcesoServidorNombres extends Proceso {
 
     //atributos
     private LinkedList<DatosProceso> listaProcesos;
 
     //constructor
-    public ProcesoServidorNombres(Escribano esc)
-    {
+    public ProcesoServidorNombres(Escribano esc) {
         super(esc);
         start();
 
     }//fin del constructor
 
-    public void iniciar()
-    {
+    public void iniciar() {
         listaProcesos = new LinkedList<>();
     }
 
-    public void run()
-    {
+    public void run() {
         imprimeln("Proceso Servidor Nombres iniciado");
 
-        while(continuar())
-        {
+        while (continuar()) {
 
         }//fin de while
 
     }//fin del metodo run
 
-    public ParMaquinaProceso busqueda(String nombreServidor)
-    {
+    public ParMaquinaProceso busqueda(String nombreServidor) {
         imprimeln("Buscando servidor disponible...");
         ParMaquinaProceso asa = null;
 
-        if(listaProcesos.size() != 0)
-        {
-            for(int i = 0; i < listaProcesos.size(); i++)
-            {
-                if(listaProcesos.get(i).getNombreServidor().equals(nombreServidor))
-                {
+        if (listaProcesos.size() != 0) {
+            for (int i = 0; i < listaProcesos.size(); i++) {
+                if (listaProcesos.get(i).getNombreServidor().equals(nombreServidor)) {
                     imprimeln("Servidor encontrado");
                     asa = listaProcesos.get(i).getAsa();
                     break;
                 }
             }
-
         }
+
+        if (asa == null)
+            imprimeln("Servidor No encontrado");
 
         return asa;
 
     }//fin del metodo busqueda
 
-    public void registrarServidor(String nombreServidor, int ID, String IP)
-    {
+    public void registrarServidor(String nombreServidor, int ID, String IP) {
         imprimeln("Registrado proceso " + ID);
 
-        DefaultTableModel modelo = (DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) ServidorNombresFrame.tablaProcesos.getModel();
         Object[] fila = new Object[3];
         int contador = ServidorNombresFrame.tablaProcesos.getRowCount();
 
@@ -85,30 +85,26 @@ public class ProcesoServidorNombres extends Proceso{
 
     }
 
-    public void eliminarServidor(int id)
-    {
+    public void eliminarServidor(int id) {
         imprimeln("Eliminando proceso " + id);
         int indice;
 
-        for(DatosProceso proceso : listaProcesos)
-        {
-            if(proceso.getId() == id)
-            {
+        for (DatosProceso proceso : listaProcesos) {
+            if (proceso.getId() == id) {
                 indice = proceso.getIndice();
                 System.out.println("Indice: " + indice);
                 listaProcesos.remove(proceso);
-                ((DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel()).removeRow(indice);
+                ((DefaultTableModel) ServidorNombresFrame.tablaProcesos.getModel()).removeRow(indice);
                 ServidorNombresFrame.tablaProcesos.addNotify();
                 actualizarIndices();
             }
         }
     }
 
-    public void actualizarIndices()
-    {
+    public void actualizarIndices() {
         int contador = ServidorNombresFrame.tablaProcesos.getRowCount();
 
-        for(int i = 0; i < contador; i++){
+        for (int i = 0; i < contador; i++) {
 
             listaProcesos.get(i).setIndice(i);
         }
@@ -116,8 +112,7 @@ public class ProcesoServidorNombres extends Proceso{
 
 }//fin de la clase ProcesoServidorNombres
 
-class DatosProceso
-{
+class DatosProceso {
     private String nombreServidor;
     private int id;
     private String ip;
@@ -125,8 +120,7 @@ class DatosProceso
     private ParMaquinaProceso asa;
 
     //constructor
-    public DatosProceso(String nombreServidor, ParMaquinaProceso asa)
-    {
+    public DatosProceso(String nombreServidor, ParMaquinaProceso asa) {
         this.nombreServidor = nombreServidor;
         this.asa = asa;
         this.id = asa.dameID();

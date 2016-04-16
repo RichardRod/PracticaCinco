@@ -12,7 +12,7 @@ import java.util.Hashtable;
  * @Nombre: Rodriguez Haro Ricardo
  * @seccion: D04
  * @No: Practica 2
- * Modificado para Practica 2
+ * Modificado para Practica 5
  */
 
 public final class MicroNucleo extends MicroNucleoBase {
@@ -89,52 +89,21 @@ public final class MicroNucleo extends MicroNucleoBase {
     /**
      * Para el(la) encargad@ de direccionamiento por servidor de nombres en practica 5
      */
-    protected void sendVerdadero(String dest, byte[] message)
-    {
+    protected void sendVerdadero(String dest, byte[] message) {
         System.out.println("Invocado sendVerdadero con String");
 
 
-
-        if(dest != "")
-        {
-            if(tablaEmision.containsKey(Integer.parseInt(dest)))
-            {
+        if (dest != "") {
+            if (tablaEmision.containsKey(Integer.parseInt(dest))) {
                 message = empacarDatos(tablaEmision.get(new Integer(dest)).getId(), message);
                 enviarMensaje(tablaEmision.get(new Integer(dest)).getIp(), message);
                 imprimeln("Enviando mensaje a IP=" + tablaEmision.get(new Integer(dest)).getIp() + " ID=" + tablaEmision.get(new Integer(dest)));
                 tablaEmision.remove(dest);
             }//fin de if
-            else
-            {
-                String error = "Ningun servidor te puede atender";
-                for(int i = 12; i < message.length; i++){
-                    message[i] = (byte)error.charAt(i);
-                }
-
-
-                System.out.println("No hay servidores disponibles");
-            }
-        }
-        else
-        {
+        } else {
 
             System.out.println("No hay servidores disponibles");
         }
-
-
-
-
-        /*ParMaquinaProceso pmp = dameDestinatarioDesdeInterfaz();
-        if (tablaEmision.containsKey(dest)) {
-            message = empacarDatos(tablaEmision.get(new Integer(dest)).getId(), message);
-            enviarMensaje(tablaEmision.get(new Integer(dest)).getIp(), message);
-            imprimeln("Enviando mensaje a IP=" + tablaEmision.get(new Integer(dest)).getIp() + " ID=" + tablaEmision.get(new Integer(dest)));
-            tablaEmision.remove(dest);
-        } else {
-            message = empacarDatos(pmp.dameID(), message);
-            enviarMensaje(pmp.dameIP(), message);
-            imprimeln("Enviando mensaje a IP=" + pmp.dameIP() + " ID=" + pmp.dameID());
-        }*/
 
     }//fin del metodo sendVerdadero
 
@@ -165,6 +134,7 @@ public final class MicroNucleo extends MicroNucleoBase {
         while (seguirEsperandoDatagramas()) {
 
             try {
+
                 dameSocketRecepcion().receive(recepcion);
                 System.arraycopy(recepcion.getData(), 0, origen, 0, 4);
                 System.arraycopy(recepcion.getData(), 4, destino, 0, 4);
@@ -176,6 +146,7 @@ public final class MicroNucleo extends MicroNucleoBase {
                 if (procesoDestino == null) {
                     byte[] error = new byte[2];
 
+
                     datos = recepcion.getData();
                     error = empacar((short) -1);
                     for (int i = 10, j = 0; j < +2; i++, j++) {
@@ -184,6 +155,7 @@ public final class MicroNucleo extends MicroNucleoBase {
 
                     send(desempacarEntero(origen), datos);
                 } else {
+
                     if (tablaRecepcion.containsKey(desempacarEntero(destino))) {
                         datos = tablaRecepcion.get(desempacarEntero(destino));
                         System.arraycopy(recepcion.getData(), 0, datos, 0, recepcion.getData().length);
