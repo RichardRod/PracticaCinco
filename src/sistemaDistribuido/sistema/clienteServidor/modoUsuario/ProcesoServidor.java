@@ -48,7 +48,7 @@ public class ProcesoServidor extends Proceso {
         imprimeln("Registrando servidor");
 
         try {
-            Puente.exportarInterfaz(NOMBRE_SERVIDOR, dameID(), InetAddress.getLocalHost().getHostAddress());
+            Puentazo.agregar(NOMBRE_SERVIDOR, dameID(), InetAddress.getLocalHost().getHostAddress());
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class ProcesoServidor extends Proceso {
             imprimeln("Fin del proceso");
         }
 
-        Puente.eliminar(dameID());
+        Puentazo.eliminar(dameID());
     }
 
     private boolean crearArchivo(String nombreArchivo) {

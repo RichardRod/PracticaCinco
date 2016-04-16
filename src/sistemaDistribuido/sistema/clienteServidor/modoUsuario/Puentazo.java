@@ -1,6 +1,6 @@
 package sistemaDistribuido.sistema.clienteServidor.modoUsuario;
 
-public class Puente {
+public class Puentazo {
 
     private static ProcesoServidorNombres servidorNombres;
 
@@ -10,7 +10,7 @@ public class Puente {
         servidorNombres.iniciar();
     }
 
-    public static int exportarInterfaz(String NOMBRE_SERVIDOR, int i, String hostAddress)
+    public static int agregar(String NOMBRE_SERVIDOR, int i, String hostAddress)
     {
         servidorNombres.registrarServidor(NOMBRE_SERVIDOR, i, hostAddress);
         return 0;
@@ -24,4 +24,4 @@ public class Puente {
 
 
 
-}//fin de la clase Puente
+}//fin de la clase Puentazo

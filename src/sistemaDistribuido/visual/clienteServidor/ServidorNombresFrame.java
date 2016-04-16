@@ -1,7 +1,7 @@
 package sistemaDistribuido.visual.clienteServidor;
 
 import sistemaDistribuido.sistema.clienteServidor.modoUsuario.ProcesoServidorNombres;
-import sistemaDistribuido.sistema.clienteServidor.modoUsuario.Puente;
+import sistemaDistribuido.sistema.clienteServidor.modoUsuario.Puentazo;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -32,7 +32,7 @@ public class ServidorNombresFrame extends ProcesoFrame
 
         proc=new ProcesoServidorNombres(this);
         fijarProceso(proc);
-        Puente.asignarPuente(proc);
+        Puentazo.asignarPuente(proc);
 
     }//fin del constructor
 

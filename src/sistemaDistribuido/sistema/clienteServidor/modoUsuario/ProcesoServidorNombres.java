@@ -9,9 +9,7 @@ import java.util.LinkedList;
 public class ProcesoServidorNombres extends Proceso{
 
     //atributos
-    private LinkedList<DatosProceso> listaProcesos = new LinkedList<>();
-
-
+    private LinkedList<DatosProceso> listaProcesos;
 
     //constructor
     public ProcesoServidorNombres(Escribano esc)
@@ -57,13 +55,20 @@ public class ProcesoServidorNombres extends Proceso{
 
     public void eliminarServidor(int id)
     {
+        imprimeln("Eliminando proceso " + id);
+        int indice;
+
         for(DatosProceso proceso : listaProcesos)
         {
             if(proceso.getId() == id)
             {
-                System.out.println("Dar cran: " + proceso.getId());
+                listaProcesos.remove(proceso);
             }
         }
+
+
+        ((DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel()).removeRow(0);
+        ServidorNombresFrame.tablaProcesos.addNotify();
     }
 
 }//fin de la clase ProcesoServidorNombres
@@ -73,6 +78,7 @@ class DatosProceso
     private String nombreServidor;
     private int id;
     private String ip;
+    private int indice;
 
     //constructor
     public DatosProceso(String nombreServidor, int id, String ip)
@@ -80,6 +86,14 @@ class DatosProceso
         this.nombreServidor = nombreServidor;
         this.id = id;
         this.ip = ip;
+    }
+
+    public void setIndice(int indice) {
+        this.indice = indice;
+    }
+
+    public int getIndice() {
+        return indice;
     }
 
     public String getNombreServidor() {
