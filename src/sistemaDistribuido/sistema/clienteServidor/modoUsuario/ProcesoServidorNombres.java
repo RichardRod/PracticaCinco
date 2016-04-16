@@ -41,8 +41,14 @@ public class ProcesoServidorNombres extends Proceso{
 
         DefaultTableModel modelo = (DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel();
         Object[] fila = new Object[3];
+        int contador = ServidorNombresFrame.tablaProcesos.getRowCount();
 
-        listaProcesos.add(new DatosProceso(nombreServidor, ID, IP));
+        //System.out.println("Contador: " + contador);
+
+        DatosProceso proceso = new DatosProceso(nombreServidor, ID, IP);
+        proceso.setIndice(contador);
+
+        listaProcesos.add(proceso);
 
         fila[0] = nombreServidor;
         fila[1] = IP;
@@ -62,13 +68,24 @@ public class ProcesoServidorNombres extends Proceso{
         {
             if(proceso.getId() == id)
             {
+                indice = proceso.getIndice();
+                System.out.println("Indice: " + indice);
                 listaProcesos.remove(proceso);
+                ((DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel()).removeRow(indice);
+                ServidorNombresFrame.tablaProcesos.addNotify();
+                actualizarIndices();
             }
         }
+    }
 
+    public void actualizarIndices()
+    {
+        int contador = ServidorNombresFrame.tablaProcesos.getRowCount();
 
-        ((DefaultTableModel)ServidorNombresFrame.tablaProcesos.getModel()).removeRow(0);
-        ServidorNombresFrame.tablaProcesos.addNotify();
+        for(int i = 0; i < contador; i++){
+
+            listaProcesos.get(i).setIndice(i);
+        }
     }
 
 }//fin de la clase ProcesoServidorNombres
